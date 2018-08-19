@@ -64,7 +64,7 @@ mini_batch_size = 2000
 mini_batches = [features[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 
-learning_rate = 0.001
+learning_rate = 0.01
 hidden_num = [features.shape[1],100,10,2]
 
 b_shape = []
@@ -98,10 +98,7 @@ epochs = 30
 
 for i in range(epochs):
 	for j in range(len(mini_batches)):
-		try:
-			sess.run(train_step,feed_dict={x:mini_batches[j],labels:mini_batches_y[j]})
-		except:
-			print(len(mini_batches_y[j]))
+		sess.run(train_step,feed_dict={x:mini_batches[j],labels:mini_batches_y[j]})
 		predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
 		predict_right_tf_2 = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 		predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
