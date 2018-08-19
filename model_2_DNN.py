@@ -22,9 +22,7 @@ n_test = 0
 
 
 test_l = [0,4,8,10]
-#test_l = [0]
 train_l = [1,2,3,5,6,7,9]
-#train_l = [0]
 save_path = "for_scp/"
 for i in train_l:
 	with open(save_path+"features_"+str(i),'rb') as f:
@@ -55,14 +53,14 @@ for i in test_l:
 			test_y = np.concatenate((test_y,y_r),axis=0)
 
 n_test = 0
-for y in y_r:
-	if y == [1,0]:
+for y in test_y:
+	if y[0] == 1:
 		n_test += 1
 
 x = tf.placeholder(tf.float32)
 labels = tf.placeholder(tf.float32)
 
-mini_batch_size = 1000
+mini_batch_size = 2000
 mini_batches = [features[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 
@@ -100,8 +98,10 @@ epochs = 30
 
 for i in range(epochs):
 	for j in range(len(mini_batches)):
-		sess.run(train_step,feed_dict={x:mini_batches[j],labels:mini_batches_y[j]})
-		
+		try:
+			sess.run(train_step,feed_dict={x:mini_batches[j],labels:mini_batches_y[j]})
+		except:
+			print(len(mini_batches_y[j]))
 		predict_right_tf = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),tf.argmax(labels,1)),"float"))
 		predict_right_tf_2 = tf.reduce_sum(tf.cast(tf.equal(tf.argmax(predict,1),2*tf.argmax(labels,1)),"float"))
 		predict_right = sess.run(predict_right_tf,feed_dict={x:test_data,labels:test_y})
