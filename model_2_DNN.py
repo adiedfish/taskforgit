@@ -67,8 +67,8 @@ mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features),mini_bat
 
 
 
-learning_rate = 0.01
-hidden_num = [features.shape[1],100,50,10,2]
+learning_rate = 0.001
+hidden_num = [features.shape[1],100,100,2]
 
 b_shape = []
 w_shape = []
@@ -91,13 +91,17 @@ for i in range(len(hidden_num)-1):
 		activates.append(tf.nn.relu(zs[-1]+b[i]))
 predict = tf.nn.softmax(zs[-1]+b[-1])
 
+factor = 0.001
 loss = tf.reduce_sum(tf.nn.softmax_cross_entropy_with_logits(logits=predict,labels=labels))/mini_batch_size
+loss_add = tf.reduce_sum(predict[:,1])/mini_batch_size*factor
+loss += loss_add
+
 train_step = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
 
 init = tf.initialize_all_variables()
 sess = tf.Session()
 sess.run(init)
-epochs = 30
+epochs = 40
 
 for i in range(epochs):
 	for j in range(len(mini_batches)):
