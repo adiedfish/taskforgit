@@ -32,12 +32,10 @@ for month_num in range(4):
 				features = feature
 			else:
 				features = np.concatenate((features,feature),axis=1)
-	with open(save_path+"labels_"+"1"+"_"+str(month_num),'rb') as f:
-		y_r = pkl.load(f)
-		if month_num == 2:
+	if month_num == 2:
+		with open(save_path+"labels_"+"1"+"_"+str(month_num),'rb') as f:
+			y_r = pkl.load(f)
 			y = y_r
-		else:
-			pass
 	save_path = "for_scp/"
 	for i in test_l:
 		with open("for_scp/"+"features_"+str(i)+"_"+str(month_num),'rb') as f:
@@ -46,12 +44,11 @@ for month_num in range(4):
 				test_data = feature
 			else:
 				test_data = np.concatenate((test_data,feature),axis=1)
-	with open(save_path+"labels_"+"0"+"_"+str(month_num),'rb') as f:
-		y_r = pkl.load(f)
-		if month_num == 2:
+	if month_num == 2:
+		with open(save_path+"labels_"+"0"+"_"+str(month_num),'rb') as f:
+			y_r = pkl.load(f)
 			test_y = y_r
-		else:
-			pass
+
 
 n_test = 0
 for t_y in test_y:
