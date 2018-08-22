@@ -54,12 +54,15 @@ n_test = 0
 for t_y in test_y:
 	if t_y[0] == 1:
 		n_test += 1
-
+print(len(test_data))
+print(len(test_y))
+print(len(features))
+print(len(y))
 x = tf.placeholder(tf.float32)
 labels = tf.placeholder(tf.float32)
 
 
-mini_batch_size = 6000
+mini_batch_size = 1000
 mini_batches = [features[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 mini_batches_y = [y[k:k+mini_batch_size] for k in range(0,len(features),mini_batch_size)]
 
