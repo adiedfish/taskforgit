@@ -101,7 +101,7 @@ train_step = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(loss)
 init = tf.initialize_all_variables()
 sess = tf.Session()
 sess.run(init)
-epochs = 40
+epochs = 20
 
 for i in range(epochs):
 	for j in range(len(mini_batches)):
@@ -121,11 +121,11 @@ for i in range(epochs):
 	predict_right_2 = sess.run(predict_right_tf_2,feed_dict={x:test_data,labels:test_y})
 	print("\nEpochs {0}:{1} / {2}. how much we predict right: {3} / {4}".format(i, predict_right_2, n_test, predict_right, len(test_y)))
 
-	mat = [[predict_right_2,n_test-predict_right_2],[predict_right-predict_right_2, len(test_y)-n_test-predict_right+predict_right_2]]
+	mat = [[predict_right_2,n_test-predict_right_2],[len(test_y)-n_test-predict_right+predict_right_2, predict_right-predict_right_2]]
 
-print(mat)
-with open("mat","w+") as f:
-	pkl.dump(mat,f)
+	print(mat)
+	with open("mat/mat_"+str(i),"w+") as f:
+		pkl.dump(mat,f)
 
 
 
