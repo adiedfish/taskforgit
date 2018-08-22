@@ -42,7 +42,10 @@ for i in train_l:
 			with open(save_path+"labels_"+"1"+"_"+str(month_num),'rb') as f:
 				y_r = pkl.load(f)
 				test_y = y_r
-for i in range()
+for i in range(len(months[0])):
+	features.append([months[0][i],months[1][i]],months[2][i],months[3][i])
+for i in range(len(months_test[0])):
+	test_data.append([months_test[0][i],months_test[1][i]],months_test[2][i],months_test[3][i])
 n_test = 0
 for t_y in test_y:
 	if t_y[0] == 1:
